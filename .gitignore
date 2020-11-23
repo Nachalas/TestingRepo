@@ -3,3 +3,6 @@
 /target
 /bin
 *.mine
+.idea
+.iml
+target
