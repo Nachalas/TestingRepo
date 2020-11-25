@@ -1,9 +1,10 @@
 package model.planes;
 
-import models.ClassificationLevel;
-import models.ExperimentalPlaneType;
+import model.Plane;
+import model.enums.ClassificationLevel;
+import model.enums.ExperimentalPlaneType;
 
-public class ExperimentalPlane extends Plane{
+public class ExperimentalPlane extends Plane {
 
     private ExperimentalPlaneType experimentalPlaneType;
     private ClassificationLevel classificationLevel;
@@ -44,8 +45,8 @@ public class ExperimentalPlane extends Plane{
 
     @Override
     public String toString() {
-        return "experimentalPlane{" +
-                "model='" + model + '\'' +
-                '}';
+        return super.toString().replace("}",
+                ", type=" + experimentalPlaneType +
+                        '}');
     }
 }

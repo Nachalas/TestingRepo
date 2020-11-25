@@ -1,10 +1,11 @@
 package model.planes;
 
-import models.MilitaryPlaneType;
+import model.Plane;
+import model.enums.MilitaryPlaneType;
 
 import java.util.Objects;
 
-public class MilitaryPlane extends Plane{
+public class MilitaryPlane extends Plane {
 
     private MilitaryPlaneType militaryPlaneType;
 

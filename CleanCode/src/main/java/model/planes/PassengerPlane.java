@@ -1,8 +1,10 @@
 package model.planes;
 
+import model.Plane;
+
 import java.util.Objects;
 
-public class PassengerPlane extends Plane{
+public class PassengerPlane extends Plane {
 
     private int passengersCapacity;
 
