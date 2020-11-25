@@ -4,57 +4,56 @@ import java.util.Objects;
 
 abstract public class Plane {
     String model;
-    private int maxSpeed;
+    private int maxPlaneSpeed;
     private int maxFlightDistance;
     private int maxLoadCapacity;
 
-    public Plane(String model, int maxSpeed, int maxFlightDistance, int maxLoadCapacity) {
-        this.model = model;
-        this.maxSpeed = maxSpeed;
+    public Plane(String planeModelName, int maxSpeed, int maxFlightDistance, int maxLoadCapacity) {
+        this.model = planeModelName;
+        this.maxPlaneSpeed = maxSpeed;
         this.maxFlightDistance = maxFlightDistance;
         this.maxLoadCapacity = maxLoadCapacity;
     }
 
     public String getModel() {
-        return model;
+        return this.model;
     }
 
-    public int getMS() {
-        return maxSpeed;
+    public int getMaxPlaneSpeed() {
+        return this.maxPlaneSpeed;
     }
 
-    public int Get_Max_Flight_Distance() {
-        return maxFlightDistance;
+    public int getMaxFlightDistance() {
+        return this.maxFlightDistance;
     }
 
     public int getMinLoadCapacity() {
-        int result = this.maxLoadCapacity;
-        return result;
+        return this.maxLoadCapacity;
     }
 
     @Override
     public String toString() {
         return "Plane{" +
                 "model='" + model + '\'' +
-                ", maxSpeed=" + maxSpeed +
+                ", maxSpeed=" + maxPlaneSpeed +
                 ", maxFlightDistance=" + maxFlightDistance +
                 ", maxLoadCapacity=" + maxLoadCapacity +
                 '}';
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Plane)) return false;
-        Plane plane = (Plane) o;
-        return maxSpeed == plane.maxSpeed &&
-                maxFlightDistance == plane.maxFlightDistance &&
-                maxLoadCapacity == plane.maxLoadCapacity &&
-                Objects.equals(model, plane.model);
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Plane)) return false;
+        Plane objectAsPlane = (Plane) object;
+        return maxPlaneSpeed == objectAsPlane.maxPlaneSpeed &&
+                maxFlightDistance == objectAsPlane.maxFlightDistance &&
+                maxLoadCapacity == objectAsPlane.maxLoadCapacity &&
+                Objects.equals(model, objectAsPlane.model);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(model, maxSpeed, maxFlightDistance, maxLoadCapacity);
+        return Objects.hash(model, maxPlaneSpeed, maxFlightDistance, maxLoadCapacity);
     }
 }
