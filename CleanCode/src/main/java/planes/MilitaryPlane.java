@@ -1,23 +1,23 @@
-package Planes;
+package planes;
 
-import models.MilitaryType;
+import models.MilitaryPlaneType;
 
 import java.util.Objects;
 
 public class MilitaryPlane extends Plane{
 
-    private MilitaryType militaryPlaneType;
+    private MilitaryPlaneType militaryPlaneType;
 
-    public MilitaryPlane(String planeModelName, int maxSpeed, int maxFlightDistance, int maxLoadCapacity, MilitaryType type) {
+    public MilitaryPlane(String planeModelName, int maxSpeed, int maxFlightDistance, int maxLoadCapacity, MilitaryPlaneType type) {
         super(planeModelName, maxSpeed, maxFlightDistance, maxLoadCapacity);
         this.militaryPlaneType = type;
     }
 
-    public MilitaryType getMilitaryPlaneType() {
+    public MilitaryPlaneType getMilitaryPlaneType() {
         return militaryPlaneType;
     }
 
-    public void setMilitaryPlaneType(MilitaryType militaryPlaneType) {
+    public void setMilitaryPlaneType(MilitaryPlaneType militaryPlaneType) {
         this.militaryPlaneType = militaryPlaneType;
     }
 
