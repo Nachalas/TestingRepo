@@ -6,6 +6,7 @@ import model.planes.MilitaryPlane;
 import model.planes.PassengerPlane;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Airport {
     private List<? extends Plane> planes;
@@ -70,13 +71,10 @@ public class Airport {
     }
 
     public List<ExperimentalPlane> getListOfExperimentalPlanes() {
-        List<ExperimentalPlane> experimentalPlanes = new ArrayList<>();
-        for (Plane plane : planes) {
-            if (plane instanceof ExperimentalPlane) {
-                experimentalPlanes.add((ExperimentalPlane) plane);
-            }
-        }
-        return experimentalPlanes;
+        return this.planes.stream()
+                .filter(plane -> plane instanceof ExperimentalPlane)
+                .map(plane -> (ExperimentalPlane) plane)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void sortByMaxFlightDistance() {
