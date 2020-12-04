@@ -17,7 +17,10 @@ public class Airport {
     public List<PassengerPlane> getListOfPassengerPlanes() {
         List<? extends Plane> l = this.planes;
         List<PassengerPlane> x = new ArrayList<>();
-        for (Plane p : l) {if (p instanceof PassengerPlane) {x.add((PassengerPlane) p);}}
+        for (Plane p : l) {
+            if (p instanceof PassengerPlane) {x.add((PassengerPlane) p);
+            }
+        }
         return x;
     }
 
@@ -76,31 +79,16 @@ public class Airport {
         return experimentalPlanes;
     }
 
-    public Airport sortByMaxDistance() {
-        planes.sort(new Comparator<Plane>() {
-            public int compare(Plane o1, Plane o2) {
-                return o1.getMaxFlightDistance() - o2.getMaxFlightDistance();
-            }
-        });
-        return this;
+    public void sortByMaxFlightDistance() {
+        planes.sort(Comparator.comparingInt(Plane::getMaxFlightDistance));
     }
 
-    public Airport sortByMaxSpeed() {
-        planes.sort(new Comparator<Plane>() {
-            public int compare(Plane o1, Plane o2) {
-                return o1.getMaxPlaneSpeed() - o2.getMaxPlaneSpeed();
-            }
-        });
-        return this;
+    public void sortByMaxPlaneSpeed() {
+        planes.sort(Comparator.comparingInt(Plane::getMaxPlaneSpeed));
     }
 
-    public Airport sortByMaxLoadCapacity() {
-        planes.sort(new Comparator<Plane>() {
-            public int compare(Plane o1, Plane o2) {
-                return o1.getMinLoadCapacity() - o2.getMinLoadCapacity();
-            }
-        });
-        return this;
+    public void sortByMaxLoadCapacity() {
+        planes.sort(Comparator.comparingInt(Plane::getMaxLoadCapacity));
     }
 
     public List<? extends Plane> getListOfPlanes() {
@@ -109,9 +97,9 @@ public class Airport {
 
     @Override
     public String toString() {
-        return "model.Airport{" +
-                "Planes=" + planes.toString() +
-                '}';
+       return new StringBuilder().append("model.Airport{")
+               .append("Planes=").append(planes)
+               .append("}").toString();
     }
 
 }

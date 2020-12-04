@@ -27,18 +27,18 @@ abstract public class Plane {
         return this.maxFlightDistance;
     }
 
-    public int getMinLoadCapacity() {
+    public int getMaxLoadCapacity() {
         return this.maxLoadCapacity;
     }
 
     @Override
     public String toString() {
-        return "Plane{" +
-                "model='" + model + '\'' +
-                ", maxSpeed=" + maxPlaneSpeed +
-                ", maxFlightDistance=" + maxFlightDistance +
-                ", maxLoadCapacity=" + maxLoadCapacity +
-                '}';
+        return new StringBuilder().append("Plane{")
+                .append("model='").append(model).append("'")
+                .append(", maxSpeed=").append(maxPlaneSpeed)
+                .append(", maxFlightDistance=").append(maxFlightDistance)
+                .append(", maxLoadCapacity=").append(maxLoadCapacity)
+                .append("}").toString();
     }
 
     @Override
