@@ -1,5 +1,7 @@
 package model;
 
+import model.enums.ClassificationLevel;
+import model.enums.ExperimentalPlaneType;
 import model.planes.ExperimentalPlane;
 import model.enums.MilitaryPlaneType;
 import model.planes.MilitaryPlane;
@@ -29,39 +31,34 @@ public class Airport {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    public List<ExperimentalPlane> getListOfExperimentalPlanes() {
+        return this.planes.stream()
+                .filter(plane -> plane instanceof ExperimentalPlane)
+                .map(plane -> (ExperimentalPlane) plane)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
     public PassengerPlane getPassengerPlaneWithMaxPassengersCapacity() {
         return getListOfPassengerPlanes().stream()
                 .max(Comparator.comparingInt(PassengerPlane::getPassengersCapacity))
                 .get();
     }
 
-    public List<MilitaryPlane> getListOfTransportMilitaryPlanes() {
-        List<MilitaryPlane> transportMilitaryPlanes = new ArrayList<>();
-        List<MilitaryPlane> militaryPlanes = getListOfMilitaryPlanes();
-        for (MilitaryPlane plane : militaryPlanes) {
-            if (plane.getMilitaryPlaneType() == MilitaryPlaneType.TRANSPORT) {
-                transportMilitaryPlanes.add(plane);
-            }
-        }
-        return transportMilitaryPlanes;
+    public List<MilitaryPlane> getListOfMilitaryPlanesOfType(MilitaryPlaneType militaryPlaneType) {
+        return getListOfMilitaryPlanes().stream()
+                .filter(militaryPlane -> militaryPlane.getMilitaryPlaneType().equals(militaryPlaneType))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public List<MilitaryPlane> getListOfBomberMilitaryPlanes() {
-        List<MilitaryPlane> bomberMilitaryPlanes = new ArrayList<>();
-        List<MilitaryPlane> militaryPlanes = getListOfMilitaryPlanes();
-        for (MilitaryPlane plane : militaryPlanes) {
-            if (plane.getMilitaryPlaneType() == MilitaryPlaneType.BOMBER) {
-                bomberMilitaryPlanes.add(plane);
-            }
-        }
-        return bomberMilitaryPlanes;
-
+    public List<ExperimentalPlane> getListOfExperimentalPlanesOfType(ExperimentalPlaneType experimentalPlaneType) {
+        return getListOfExperimentalPlanes().stream()
+                .filter(experimentalPlane -> experimentalPlane.getExperimentalPlaneType().equals(experimentalPlaneType))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public List<ExperimentalPlane> getListOfExperimentalPlanes() {
-        return this.planes.stream()
-                .filter(plane -> plane instanceof ExperimentalPlane)
-                .map(plane -> (ExperimentalPlane) plane)
+    public List<ExperimentalPlane> getListOfExperimentalPlanesOfClassificationLevel(ClassificationLevel classificationLevel) {
+        return getListOfExperimentalPlanes().stream()
+                .filter(experimentalPlane -> experimentalPlane.getClassificationLevel().equals(classificationLevel))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
