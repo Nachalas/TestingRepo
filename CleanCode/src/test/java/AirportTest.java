@@ -96,27 +96,110 @@ public class AirportTest {
     public void testGetListOfMilitaryPlanes() {
         Airport airport = new Airport(planes);
         List<MilitaryPlane> airportMilitaryPlanes = airport.getListOfMilitaryPlanes();
-        airportMilitaryPlanes.sort(Comparator.comparing(Plane::getModel));
-        militaryPlanes.sort(Comparator.comparing(Plane::getModel));
-        Assert.assertEquals(militaryPlanes, airportMilitaryPlanes);
+        Assert.assertTrue(
+                (militaryPlanes.size() == airportMilitaryPlanes.size())
+                && militaryPlanes.containsAll(airportMilitaryPlanes)
+                && airportMilitaryPlanes.containsAll(militaryPlanes)
+        );
     }
 
     @Test
     public void testGetListOfPassengerPlanes() {
         Airport airport = new Airport(planes);
         List<PassengerPlane> airportPassengerPlanes = airport.getListOfPassengerPlanes();
-        airportPassengerPlanes.sort(Comparator.comparing(Plane::getModel));
-        passengerPlanes.sort(Comparator.comparing(Plane::getModel));
-        Assert.assertEquals(passengerPlanes, airportPassengerPlanes);
+        Assert.assertTrue(
+                (passengerPlanes.size() == airportPassengerPlanes.size())
+                        && passengerPlanes.containsAll(airportPassengerPlanes)
+                        && airportPassengerPlanes.containsAll(passengerPlanes)
+        );
     }
 
     @Test
     public void testGetListOfExperimentalPlanes() {
         Airport airport = new Airport(planes);
         List<ExperimentalPlane> airportExperimentalPlanes = airport.getListOfExperimentalPlanes();
-        airportExperimentalPlanes.sort(Comparator.comparing(Plane::getModel));
-        experimentalPlanes.sort(Comparator.comparing(Plane::getModel));
-        Assert.assertEquals(experimentalPlanes, airportExperimentalPlanes);
+        Assert.assertTrue(
+                (experimentalPlanes.size() == airportExperimentalPlanes.size())
+                        && experimentalPlanes.containsAll(airportExperimentalPlanes)
+                        && airportExperimentalPlanes.containsAll(experimentalPlanes)
+        );
+    }
+
+    @Test
+    public void testGetListOfMilitaryBomberPlanes() {
+        Airport airport = new Airport(planes);
+        List<MilitaryPlane> airportMilitaryBomberPlanes = airport.getListOfMilitaryPlanesOfType(MilitaryPlaneType.BOMBER);
+        Assert.assertTrue(
+                (militaryBomberPlanes.size() == airportMilitaryBomberPlanes.size())
+                        && militaryBomberPlanes.containsAll(airportMilitaryBomberPlanes)
+                        && airportMilitaryBomberPlanes.containsAll(militaryBomberPlanes)
+        );
+    }
+
+    @Test
+    public void testGetListOfMilitaryFighterPlanes() {
+        Airport airport = new Airport(planes);
+        List<MilitaryPlane> airportMilitaryFighterPlanes = airport.getListOfMilitaryPlanesOfType(MilitaryPlaneType.FIGHTER);
+        Assert.assertTrue(
+                (militaryFighterPlanes.size() == airportMilitaryFighterPlanes.size())
+                        && militaryFighterPlanes.containsAll(airportMilitaryFighterPlanes)
+                        && airportMilitaryFighterPlanes.containsAll(militaryFighterPlanes)
+        );
+    }
+
+    @Test
+    public void testGetListOfMilitaryTransportPlanes() {
+        Airport airport = new Airport(planes);
+        List<MilitaryPlane> airportMilitaryTransportPlanes = airport.getListOfMilitaryPlanesOfType(MilitaryPlaneType.TRANSPORT);
+        Assert.assertTrue(
+                (militaryTransportPlanes.size() == airportMilitaryTransportPlanes.size())
+                        && militaryTransportPlanes.containsAll(airportMilitaryTransportPlanes)
+                        && airportMilitaryTransportPlanes.containsAll(militaryTransportPlanes)
+        );
+    }
+
+    @Test
+    public void testGetListOfExperimentalHighAltitudePlanes() {
+        Airport airport = new Airport(planes);
+        List<ExperimentalPlane> airportExperimentalHighAltitudePlanes = airport.getListOfExperimentalPlanesOfType(ExperimentalPlaneType.HIGH_ALTITUDE);
+        Assert.assertTrue(
+                (experimentalHighAltitudePlanes.size() == airportExperimentalHighAltitudePlanes.size())
+                        && experimentalHighAltitudePlanes.containsAll(airportExperimentalHighAltitudePlanes)
+                        && airportExperimentalHighAltitudePlanes.containsAll(experimentalHighAltitudePlanes)
+        );
+    }
+
+    @Test
+    public void testGetListOfExperimentalVTOLPlanes() {
+        Airport airport = new Airport(planes);
+        List<ExperimentalPlane> airportExperimentalVTOLPlanes = airport.getListOfExperimentalPlanesOfType(ExperimentalPlaneType.VTOL);
+        Assert.assertTrue(
+                (experimentalVTOLPlanes.size() == airportExperimentalVTOLPlanes.size())
+                        && experimentalVTOLPlanes.containsAll(airportExperimentalVTOLPlanes)
+                        && airportExperimentalVTOLPlanes.containsAll(experimentalVTOLPlanes)
+        );
+    }
+
+    @Test
+    public void testGetListOfExperimentalSecretPlanes() {
+        Airport airport = new Airport(planes);
+        List<ExperimentalPlane> airportExperimentalSecretPlanes = airport.getListOfExperimentalPlanesOfClassificationLevel(ClassificationLevel.SECRET);
+        Assert.assertTrue(
+                (experimentalSecretPlanes.size() == airportExperimentalSecretPlanes.size())
+                        && experimentalSecretPlanes.containsAll(airportExperimentalSecretPlanes)
+                        && airportExperimentalSecretPlanes.containsAll(experimentalSecretPlanes)
+        );
+    }
+
+    @Test
+    public void testGetListOfExperimentalTopSecretPlanes() {
+        Airport airport = new Airport(planes);
+        List<ExperimentalPlane> airportExperimentalTopSecretPlanes = airport.getListOfExperimentalPlanesOfClassificationLevel(ClassificationLevel.TOP_SECRET);
+        Assert.assertTrue(
+                (experimentalTopSecretPlanes.size() == airportExperimentalTopSecretPlanes.size())
+                        && experimentalTopSecretPlanes.containsAll(airportExperimentalTopSecretPlanes)
+                        && airportExperimentalTopSecretPlanes.containsAll(experimentalTopSecretPlanes)
+        );
     }
 
     @Test
