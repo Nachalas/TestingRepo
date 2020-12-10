@@ -1,0 +1,42 @@
+package page;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import test.CustomConditions;
+
+public class ProductPage extends AbstractPage {
+
+    private static final String ITEM_PAGE_URL = "https://7745.by/product/366801";
+
+    @FindBy(xpath = "//div[@class='action-btn js-favorites-toggle action-btn--favourites-product action-btn--favourites']")
+    WebElement addToFavouritesButton;
+
+    @FindBy(xpath = "//span[@data-pl-favorite-count]")
+    WebElement favouriteCountSpan;
+
+    public ProductPage(WebDriver driver) {
+        super(driver);
+    }
+
+    public ProductPage openPage() {
+        driver.get(ITEM_PAGE_URL);
+        return this;
+    }
+
+    public ProductPage addItemToDesired() {
+        addToFavouritesButton.click();
+        (new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)).until(CustomConditions.textNotEmpty());
+        return this;
+    }
+
+    public int getFavouriteItemsCount() {
+        return Integer.parseInt(favouriteCountSpan.getText());
+    }
+
+    public DesiredPage openFavouritesPage() {
+        driver.get("https://7745.by/favorites");
+        return new DesiredPage(driver);
+    }
+}
