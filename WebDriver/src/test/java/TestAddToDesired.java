@@ -23,8 +23,8 @@ public class TestAddToDesired {
 
     @Test
     public void testPresenceAfterAddingToDesired() {
-        String expectedName = "Вытяжка встраиваемая NORMANN BCH-8101.60 нержавеющая сталь (BCH-8101.60.IN)";
         driver.get("https://7745.by/product/366801");
+        String expectedName = driver.findElement(By.xpath("//h1[@class='product__title product__title--small-mt js-prod-title']")).getText();
         WebElement addToDesiredButton = driver.findElement(By.xpath("//div[@class='action-btn js-favorites-toggle action-btn--favourites-product action-btn--favourites']"));
         addToDesiredButton.click();
         (new WebDriverWait(driver, 10)).until(CustomConditions.textNotEmpty());
