@@ -19,9 +19,9 @@ public class TestAddToDesired {
 
     @Test
     public void testPresenceAfterAddingToDesired() {
-        String expected = "Вытяжка встраиваемая NORMANN BCH-8101.60 нержавеющая сталь (BCH-8101.60.IN)";
-        String firstDesiredElement = new ProductPage(driver)
-                .openPage()
+        ProductPage productPage = new ProductPage(driver);
+        String expected = productPage.openPage().getProductName();
+        String firstDesiredElement = productPage
                 .addItemToDesired()
                 .openFavouritesPage()
                 .getFirstItemName();

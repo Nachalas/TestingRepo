@@ -16,6 +16,9 @@ public class ProductPage extends AbstractPage {
     @FindBy(xpath = "//span[@data-pl-favorite-count]")
     WebElement favouriteCountSpan;
 
+    @FindBy(xpath = "//h1[@class='product__title product__title--small-mt js-prod-title']")
+    WebElement productName;
+
     public ProductPage(WebDriver driver) {
         super(driver);
     }
@@ -29,6 +32,10 @@ public class ProductPage extends AbstractPage {
         addToFavouritesButton.click();
         (new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)).until(CustomConditions.textNotEmpty());
         return this;
+    }
+
+    public String getProductName() {
+        return productName.getText();
     }
 
     public int getFavouriteItemsCount() {
