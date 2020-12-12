@@ -69,7 +69,7 @@ public class ProductPage extends AbstractPage {
         firstOption.click();
         submitPODChangeButton.click();
         try {
-            Thread.sleep(700);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
