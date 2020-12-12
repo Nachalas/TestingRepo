@@ -1,5 +1,6 @@
 package test;
 
+import org.apache.logging.log4j.LogManager;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.ProductPage;
@@ -17,6 +18,8 @@ public class TestChangePlaceOfDelivery extends CommonConditions {
                 .openPage()
                 .changePlaceOfDelivery(TestDataReader.getTestData(PLACE_OF_DELIVERY_PROPERTY))
                 .getPlaceOfDelivery();
+        LogManager.getRootLogger().warn(expected);
+        LogManager.getRootLogger().warn(actual);
         Assert.assertTrue(actual.toLowerCase().contains(expected.toLowerCase()));
     }
 
