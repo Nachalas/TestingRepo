@@ -20,6 +20,9 @@ public class ProductPage extends AbstractPage {
     @FindBy(xpath = "//span[@data-pl-favorite-count]")
     WebElement favouriteCountSpan;
 
+    @FindBy(xpath = "//span[@data-pl-viewed-count]")
+    WebElement viewedCountSpan;
+
     @FindBy(xpath = "//h1[@class='product__title product__title--small-mt js-prod-title']")
     WebElement productName;
 
@@ -34,12 +37,13 @@ public class ProductPage extends AbstractPage {
     @Override
     public ProductPage openPage() {
         driver.get(ITEM_PAGE_URL);
+        (new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)).until(CustomConditions.textNotEmpty("//span[@data-pl-viewed-count]"));
         return this;
     }
 
     public ProductPage addItemToDesired() {
         addToFavouritesButton.click();
-        (new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)).until(CustomConditions.textNotEmpty());
+        (new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)).until(CustomConditions.textNotEmpty("//span[@data-pl-favorite-count]"));
         return this;
     }
 
@@ -59,6 +63,10 @@ public class ProductPage extends AbstractPage {
 
     public int getFavouriteItemsCount() {
         return Integer.parseInt(favouriteCountSpan.getText());
+    }
+
+    public int getViewedItemsCount() {
+        return Integer.parseInt(viewedCountSpan.getText());
     }
 
     public DesiredPage openFavouritesPage() {
