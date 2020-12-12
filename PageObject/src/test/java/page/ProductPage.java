@@ -23,6 +23,7 @@ public class ProductPage extends AbstractPage {
         super(driver);
     }
 
+    @Override
     public ProductPage openPage() {
         driver.get(ITEM_PAGE_URL);
         return this;

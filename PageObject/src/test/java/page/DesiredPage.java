@@ -14,6 +14,7 @@ public class DesiredPage extends AbstractPage {
         super(driver);
     }
 
+    @Override
     public DesiredPage openPage() {
         driver.get(ITEM_PAGE_URL);
         return this;
