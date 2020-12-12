@@ -18,8 +18,6 @@ public class TestChangePlaceOfDelivery extends CommonConditions {
                 .openPage()
                 .changePlaceOfDelivery(TestDataReader.getTestData(PLACE_OF_DELIVERY_PROPERTY))
                 .getPlaceOfDelivery();
-        LogManager.getRootLogger().warn(expected);
-        LogManager.getRootLogger().warn(actual);
         Assert.assertTrue(actual.toLowerCase().contains(expected.toLowerCase()));
     }
 

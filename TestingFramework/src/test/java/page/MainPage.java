@@ -22,11 +22,23 @@ public class MainPage extends AbstractPage
 	@FindBy (xpath = "//input[@id='edit-submit-1']")
 	WebElement logInSubmitButton;
 
+	@FindBy (xpath = "//input[@class='ui-autocomplete-input']")
+	WebElement searchBarInput;
+
+	@FindBy (xpath = "//button[@class='btn btn-search']")
+	WebElement searchBarButton;
+
 	private final String BASE_URL = "https://7745.by/";
 
 	public MainPage(WebDriver driver)
 	{
 		super(driver);
+	}
+
+	public SearchPage searchForQuery(String query) {
+		searchBarInput.sendKeys(query);
+		searchBarButton.click();
+		return new SearchPage(driver);
 	}
 
 	public MainPage openLogInDialog() {
@@ -43,6 +55,8 @@ public class MainPage extends AbstractPage
 						presenceOfElementLocated(By.xpath("//div[@id='logon-link']/span[@class='text username']")));
 		return this;
 	}
+
+
 
 	@Override
 	public MainPage openPage()
