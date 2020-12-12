@@ -1,9 +1,12 @@
 package page;
 
 import model.User;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MainPage extends AbstractPage
 {
@@ -31,16 +34,14 @@ public class MainPage extends AbstractPage
 		return this;
 	}
 
-	public ProfilePage logIn(User user) {
+	public MainPage logIn(User user) {
 		loginInput.sendKeys(user.getUsername());
 		passwordInput.sendKeys(user.getPassword());
 		logInSubmitButton.click();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		return new ProfilePage(driver).openPage();
+		new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS).
+				until(ExpectedConditions.
+						presenceOfElementLocated(By.xpath("//div[@id='logon-link']/span[@class='text username']")));
+		return this;
 	}
 
 	@Override
