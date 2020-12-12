@@ -1,6 +1,7 @@
 package page;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,7 +11,7 @@ import test.CustomConditions;
 
 public class ProductPage extends AbstractPage {
 
-    private String ITEM_PAGE_URL;
+    private String itemPageURL;
 
     private static final String addToCartButtonXPath = "//div[@class='controls-bl controls-bl--flex']/button";
 
@@ -29,14 +30,26 @@ public class ProductPage extends AbstractPage {
     @FindBy(xpath = addToCartButtonXPath)
     WebElement addToCartButton;
 
+    @FindBy(xpath = "//input[@class='open-popup icon-city d-flex']")
+    WebElement openChangePODDialog;
+
+    @FindBy(xpath = "//input[@class='form-control ui-autocomplete-input set-locality-id']")
+    WebElement changePODInput;
+
+    @FindBy(xpath = "//button[@class='btn btn-orange']")
+    WebElement submitPODChangeButton;
+
+    @FindBy(xpath = "//div[@class='card--container card--container__delivery']/div[@class='center-block']/div[@class='center-block--content center-block--address']")
+    WebElement placeOfDeliveryName;
+
     public ProductPage(WebDriver driver, String url) {
         super(driver);
-        ITEM_PAGE_URL = url;
+        itemPageURL = url;
     }
 
     @Override
     public ProductPage openPage() {
-        driver.get(ITEM_PAGE_URL);
+        driver.get(itemPageURL);
         (new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)).until(CustomConditions.textNotEmpty("//span[@data-pl-viewed-count]"));
         return this;
     }
@@ -45,6 +58,26 @@ public class ProductPage extends AbstractPage {
         addToFavouritesButton.click();
         (new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)).until(CustomConditions.textNotEmpty("//span[@data-pl-favorite-count]"));
         return this;
+    }
+
+    public ProductPage changePlaceOfDelivery(String place) {
+        openChangePODDialog.click();
+        changePODInput.sendKeys(Keys.CONTROL + "a");
+        changePODInput.sendKeys(Keys.DELETE);
+        changePODInput.sendKeys(place);
+        WebElement firstOption = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//li[@class='ui-menu-item']")));
+        firstOption.click();
+        submitPODChangeButton.click();
+        try {
+            Thread.sleep(700);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    public String getPlaceOfDelivery() {
+        return placeOfDeliveryName.getText();
     }
 
     public ProductPage addItemToCart() {
