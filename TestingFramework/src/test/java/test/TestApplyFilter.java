@@ -1,5 +1,6 @@
 package test;
 
+import org.apache.logging.log4j.LogManager;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.CatalogPage;
@@ -16,6 +17,7 @@ public class TestApplyFilter extends CommonConditions {
                 .openPage()
                 .applyManufacturerFilter(expected)
                 .getFirstItemName();
+        LogManager.getRootLogger().info("Checking that '" + actual + "' contatins '" + expected + "'");
         Assert.assertTrue(actual.toLowerCase().contains(expected.toLowerCase()));
     }
 }

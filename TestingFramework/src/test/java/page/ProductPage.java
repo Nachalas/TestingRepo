@@ -1,5 +1,7 @@
 package page;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -15,44 +17,47 @@ import java.util.List;
 public class ProductPage extends AbstractPage {
 
     private String itemPageURL;
-
+    private final Logger logger = LogManager.getRootLogger();
     private static final String addToCartButtonXPath = "//div[@class='controls-bl controls-bl--flex']/button";
 
+    private By comparisonButtonLocator = By.xpath("//div[@class='action-btn action-btn--compare-in-card do-compare  compare-in just-added']");
+    private By placeOfDeliveryNameLocator = By.xpath("//div[@class='card--container card--container__delivery']/div[@class='center-block']/div[@class='center-block--content center-block--address']");
+
     @FindBy(xpath = "//div[@class='action-btn js-favorites-toggle action-btn--favourites-product action-btn--favourites']")
-    WebElement addToFavouritesButton;
+    private WebElement addToFavouritesButton;
 
     @FindBy(xpath = "//span[@data-pl-favorite-count]")
-    WebElement favouriteCountSpan;
+    private WebElement favouriteCountSpan;
 
     @FindBy(xpath = "//span[@data-pl-viewed-count]")
-    WebElement viewedCountSpan;
+    private WebElement viewedCountSpan;
 
     @FindBy(xpath = "//h1[@class='product__title product__title--small-mt js-prod-title']")
-    WebElement productName;
+    private WebElement productName;
 
     @FindBy(xpath = addToCartButtonXPath)
-    WebElement addToCartButton;
+    private WebElement addToCartButton;
 
     @FindBy(xpath = "//input[@class='open-popup icon-city d-flex']")
-    WebElement openChangePODDialog;
+    private WebElement openChangePODDialog;
 
     @FindBy(xpath = "//input[@class='form-control ui-autocomplete-input set-locality-id']")
-    WebElement changePODInput;
+    private WebElement changePODInput;
 
     @FindBy(xpath = "//button[@class='btn btn-orange']")
-    WebElement submitPODChangeButton;
+    private WebElement submitPODChangeButton;
 
     @FindBy(xpath = "//div[@class='card--container card--container__delivery']/div[@class='center-block']/div[@class='center-block--content center-block--address']")
-    WebElement placeOfDeliveryName;
+    private WebElement placeOfDeliveryName;
 
     @FindBy(xpath = "//span[@class='item-block_text']")
-    WebElement addToComparisonButton;
+    private WebElement addToComparisonButton;
 
     @FindBy(xpath = "//table[@class='features']/tbody/tr[not(@class)]/td[1]")
-    List<WebElement> itemCharacteristicsNames;
+    private List<WebElement> itemCharacteristicsNames;
 
     @FindBy(xpath = "//table[@class='features']/tbody/tr[not(@class)]/td[2]")
-    List<WebElement> itemCharacteristics;
+    private List<WebElement> itemCharacteristics;
 
     public ProductPage(WebDriver driver, String url) {
         super(driver);
@@ -62,20 +67,23 @@ public class ProductPage extends AbstractPage {
     @Override
     public ProductPage openPage() {
         driver.get(itemPageURL);
+        logger.info("Opened page " + itemPageURL);
         (new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)).until(CustomConditions.textNotEmpty("//span[@data-pl-viewed-count]"));
         return this;
     }
 
     public ProductPage addItemToDesired() {
         addToFavouritesButton.click();
+        logger.info("Added item to desired");
         (new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)).until(CustomConditions.textNotEmpty("//span[@data-pl-favorite-count]"));
         return this;
     }
 
     public ProductPage addItemToComparison() {
         addToComparisonButton.click();
+        logger.info("Added item to comparison");
         (new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='action-btn action-btn--compare-in-card do-compare  compare-in just-added']")));
+                .until(ExpectedConditions.presenceOfElementLocated(comparisonButtonLocator));
         return this;
     }
 
@@ -103,6 +111,7 @@ public class ProductPage extends AbstractPage {
         WebElement firstOption = new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//li[@class='ui-menu-item']")));
         firstOption.click();
         submitPODChangeButton.click();
+        logger.info("Changed place of delivery to " + place);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -112,11 +121,14 @@ public class ProductPage extends AbstractPage {
     }
 
     public String getPlaceOfDelivery() {
+        (new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)).until(
+                ExpectedConditions.presenceOfElementLocated(placeOfDeliveryNameLocator));
         return placeOfDeliveryName.getText();
     }
 
     public ProductPage addItemToCart() {
         addToCartButton.click();
+        logger.info("Added item to cart");
         (new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS))
                 .until(ExpectedConditions.attributeToBe(
                         By.xpath(addToCartButtonXPath),
@@ -138,6 +150,7 @@ public class ProductPage extends AbstractPage {
     }
 
     public DesiredPage openFavouritesPage() {
+        logger.info("Opening favorites page");
         driver.get("https://7745.by/favorites");
         return new DesiredPage(driver);
     }

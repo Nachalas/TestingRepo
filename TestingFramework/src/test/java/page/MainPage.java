@@ -1,6 +1,8 @@
 package page;
 
 import model.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,25 +12,28 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MainPage extends AbstractPage
 {
+	private final String BASE_URL = "https://7745.by/";
+	private final Logger logger = LogManager.getRootLogger();
+
+	private By usernameFieldLocator = By.xpath("//div[@id='logon-link']/span[@class='text username']");
+
 	@FindBy (xpath = "//a[@href='/profile']")
-	WebElement logInButton;
+	private WebElement logInButton;
 
 	@FindBy (xpath = "//input[@id='login-modal-input-name']")
-	WebElement loginInput;
+	private WebElement loginInput;
 
 	@FindBy (xpath = "//input[@id='edit-pass-1']")
-	WebElement passwordInput;
+	private WebElement passwordInput;
 
 	@FindBy (xpath = "//input[@id='edit-submit-1']")
-	WebElement logInSubmitButton;
+	private WebElement logInSubmitButton;
 
 	@FindBy (xpath = "//input[@class='ui-autocomplete-input']")
-	WebElement searchBarInput;
+	private WebElement searchBarInput;
 
 	@FindBy (xpath = "//button[@class='btn btn-search']")
-	WebElement searchBarButton;
-
-	private final String BASE_URL = "https://7745.by/";
+	private WebElement searchBarButton;
 
 	public MainPage(WebDriver driver)
 	{
@@ -38,6 +43,7 @@ public class MainPage extends AbstractPage
 	public SearchPage searchForQuery(String query) {
 		searchBarInput.sendKeys(query);
 		searchBarButton.click();
+		logger.info("Searching for " + query);
 		return new SearchPage(driver);
 	}
 
@@ -52,16 +58,15 @@ public class MainPage extends AbstractPage
 		logInSubmitButton.click();
 		new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS).
 				until(ExpectedConditions.
-						presenceOfElementLocated(By.xpath("//div[@id='logon-link']/span[@class='text username']")));
+						presenceOfElementLocated(usernameFieldLocator));
 		return this;
 	}
-
-
 
 	@Override
 	public MainPage openPage()
 	{
 		driver.get(BASE_URL);
+		logger.info("Opened page " + BASE_URL);
 		return this;
 	}
 }

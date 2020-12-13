@@ -18,6 +18,7 @@ public class TestChangePlaceOfDelivery extends CommonConditions {
                 .openPage()
                 .changePlaceOfDelivery(TestDataReader.getTestData(PLACE_OF_DELIVERY_PROPERTY))
                 .getPlaceOfDelivery();
+        LogManager.getRootLogger().info("Checking that '" + actual + "' contatins '" + expected + "'");
         Assert.assertTrue(actual.toLowerCase().contains(expected.toLowerCase()));
     }
 
@@ -30,6 +31,7 @@ public class TestChangePlaceOfDelivery extends CommonConditions {
         String actual = new ProductPage(driver, TestDataReader.getTestData(SECOND_PRODUCT_LINK_PROPERTY))
                 .openPage()
                 .getPlaceOfDelivery();
+        LogManager.getRootLogger().info("Checking that '" + actual + "' contatins '" + expected + "'");
         Assert.assertTrue(actual.toLowerCase().contains(expected.toLowerCase()));
     }
 

@@ -4,7 +4,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.CartPage;
 import page.ProductPage;
-import page.ProfilePage;
 import service.TestDataReader;
 
 public class TestAddToCart extends CommonConditions {
