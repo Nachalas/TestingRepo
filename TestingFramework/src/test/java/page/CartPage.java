@@ -29,8 +29,8 @@ public class CartPage extends AbstractPage {
         promocodeInput.sendKeys(promoCode);
         WebElement applyPromocodeButton = (new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS))
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='btn js-bind-promo_submit btn-orange']")));
-        applyPromocodeButton.click();
         String oldPrice = finalPriceString.getText();
+        applyPromocodeButton.click();
         (new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)).
                 until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(finalPriceString, oldPrice)));
         return this;
