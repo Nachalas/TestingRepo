@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import test.CustomConditions;
 
 public class CatalogPage extends AbstractPage  {
     private String itemPageURL;
@@ -30,13 +31,17 @@ public class CatalogPage extends AbstractPage  {
     public CatalogPage applyManufacturerFilter(String manufacturer) {
         WebElement checkbox = driver.findElement(By.xpath("//span[@class='catalog-filter__checkbox-text' and contains(text(), '" + manufacturer + "')]"));
         checkbox.click();
-        (new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='btn btn-orange' and @type='submit']")));
+        (new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//form[@class='catalog-filter']/div[@class='catalog-sbf-top catalog-sbf-btnset']/button[@class='btn btn-orange' and @type='submit']")));
         applyFilterButton.click();
-        (new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='catalog-item__wrapper']")));
         return this;
     }
 
     public String getFirstItemName() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return firstItemName.getText();
     }
 }

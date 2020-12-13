@@ -9,6 +9,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import test.CustomConditions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProductPage extends AbstractPage {
 
     private String itemPageURL;
@@ -42,6 +45,15 @@ public class ProductPage extends AbstractPage {
     @FindBy(xpath = "//div[@class='card--container card--container__delivery']/div[@class='center-block']/div[@class='center-block--content center-block--address']")
     WebElement placeOfDeliveryName;
 
+    @FindBy(xpath = "//span[@class='item-block_text']")
+    WebElement addToComparisonButton;
+
+    @FindBy(xpath = "//table[@class='features']/tbody/tr[not(@class)]/td[1]")
+    List<WebElement> itemCharacteristicsNames;
+
+    @FindBy(xpath = "//table[@class='features']/tbody/tr[not(@class)]/td[2]")
+    List<WebElement> itemCharacteristics;
+
     public ProductPage(WebDriver driver, String url) {
         super(driver);
         itemPageURL = url;
@@ -60,6 +72,29 @@ public class ProductPage extends AbstractPage {
         return this;
     }
 
+    public ProductPage addItemToComparison() {
+        addToComparisonButton.click();
+        (new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='action-btn action-btn--compare-in-card do-compare  compare-in just-added']")));
+        return this;
+    }
+
+    public List<String> getItemCharacteristicsNames() {
+        List<String> toReturn = new ArrayList<>();
+        for(WebElement elem : itemCharacteristicsNames) {
+            toReturn.add(elem.getText());
+        }
+        return toReturn;
+    }
+
+    public List<String> getItemCharacteristics() {
+        List<String> toReturn = new ArrayList<>();
+        for(WebElement elem : itemCharacteristics) {
+            toReturn.add(elem.getText());
+        }
+        return toReturn;
+    }
+
     public ProductPage changePlaceOfDelivery(String place) {
         openChangePODDialog.click();
         changePODInput.sendKeys(Keys.CONTROL + "a");
@@ -69,7 +104,7 @@ public class ProductPage extends AbstractPage {
         firstOption.click();
         submitPODChangeButton.click();
         try {
-            Thread.sleep(1500);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
