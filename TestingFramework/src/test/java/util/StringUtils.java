@@ -16,4 +16,12 @@ public class StringUtils
 		}
 		return stringBuilder.toString();
 	}
+
+	public static double parsePrice(String priceString) {
+		int integerPart = priceString.indexOf(',');
+		double priceToReturn = Double.parseDouble(priceString.substring(0, integerPart));
+		int floatPart = priceString.indexOf(' ');
+		priceToReturn += Double.parseDouble(priceString.substring(integerPart + 1, floatPart));
+		return priceToReturn;
+	}
 }
